@@ -1,0 +1,151 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1664281232555-1
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: hibernate_sequence
+            startValue: 1
+  - changeSet:
+      id: 1664281232555-2
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_answer
+                  name: id
+                  type: UUID
+              - column:
+                  name: text
+                  type: VARCHAR(255)
+            tableName: answer
+  - changeSet:
+      id: 1664281232555-3
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_question
+                  name: id
+                  type: UUID
+              - column:
+                  name: text
+                  type: VARCHAR(255)
+              - column:
+                  name: answer_id
+                  type: UUID
+            tableName: question
+  - changeSet:
+      id: 1664281232555-4
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_room
+                  name: id
+                  type: UUID
+            tableName: room
+  - changeSet:
+      id: 1664281232555-5
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: room_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: UUID
+            tableName: user_room
+  - changeSet:
+      id: 1664281232555-6
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: login
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: age
+                  type: INT
+            tableName: users
+  - changeSet:
+      id: 1664281232555-7
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: answer_id
+            baseTableName: question
+            constraintName: FK_QUESTION_ON_ANSWER
+            referencedColumnNames: id
+            referencedTableName: answer
+  - changeSet:
+      id: 1664281232555-8
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: room_id
+            baseTableName: user_room
+            constraintName: fk_user_room_on_room
+            referencedColumnNames: id
+            referencedTableName: room
+  - changeSet:
+      id: 1664281232555-9
+      author: Siarhei Krotau
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_room
+            constraintName: fk_user_room_on_user
+            referencedColumnNames: id
+            referencedTableName: users
+
